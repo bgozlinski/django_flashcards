@@ -7,7 +7,7 @@ from django.views.generic import (
 
 
 def card_list(request):
-    cards = Card.objects.all()
+    cards = Card.objects.all().order_by("box", "-date_created")  # all jest tu zbędne
     return render(
         request=request,
         template_name='cards/card_list.html',
@@ -20,3 +20,5 @@ def card_list(request):
 #  widok klasowy - analogicznie do powyzszego
 class CardListView(ListView):
     model = Card
+    # ordering = ("box", "-date_created")                       #  ordering przy pomocy atrybutu
+    queryset = Card.objects.order_by("box", "-date_created")    #  modyfikacja quesryset
