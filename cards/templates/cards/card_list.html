@@ -1,15 +1,14 @@
 {% extends 'cards/base.html' %}
-
+{% load humanize %}
 {% block content %}
 
-<h2 xmlns="http://www.w3.org/1999/html">All Cards</h2>
+  <h2>All Cards</h2>
 
-    {% for card in card_list %}
-        <h3>📦 {{ card.box }} Box</h3>
-        <article>
-            {{ card }}
-            <footer><small>Created: {{ card.date_created.isoformat}}</small></footer>
-        </article>
-    {% endfor %}
+  {% for card in card_list %}
+    {% ifchanged %}
+    <h3>📦 {{ card.box | ordinal }} Box</h3>
+    {% endifchanged %}
+    {% include 'cards/includes/card.html' %}
+  {% endfor %}
 
 {% endblock %}
