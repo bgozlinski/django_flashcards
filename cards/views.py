@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from cards.models import Card
 from django.views.generic import (
-    ListView,
+    ListView, CreateView,
 
 )
 
@@ -22,3 +23,9 @@ class CardListView(ListView):
     model = Card
     # ordering = ("box", "-date_created")                       #  ordering przy pomocy atrybutu
     queryset = Card.objects.order_by("box", "-date_created")    #  modyfikacja quesryset
+
+
+class CardCreateView(CreateView):
+    model = Card
+    fields = ['question', 'answer', 'box']
+    success_url = reverse_lazy('card-create')
