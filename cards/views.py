@@ -1,8 +1,13 @@
-from django.shortcuts import render
+from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+
+from cards.forms import CardForm
 from cards.models import Card
 from django.views.generic import (
-    ListView, CreateView,
+    ListView,
+    CreateView,
+    UpdateView
 
 )
 
@@ -18,6 +23,24 @@ def card_list(request):
     )
 
 
+def update_view(request, pk):
+    card = Card.objects.get(pk=pk)
+    form = CardForm(instance=card)
+    if request.method == "POST":
+        form = CardForm(data=request.POST, instance=card)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('card-list'))
+
+    return render(
+        request=request,
+        template_name='cards/card_form.html',
+        context={
+            'form': form
+        }
+    )
+
+
 #  widok klasowy - analogicznie do powyzszego
 class CardListView(ListView):
     model = Card
@@ -25,7 +48,13 @@ class CardListView(ListView):
     queryset = Card.objects.order_by("box", "-date_created")    #  modyfikacja quesryset
 
 
-class CardCreateView(CreateView):
+class CardCreateView(SuccessMessageMixin, CreateView):
     model = Card
-    fields = ['question', 'answer', 'box']
-    success_url = reverse_lazy('card-create')
+    fields = ["question", "answer", "box"]
+    success_url = reverse_lazy("card-list")
+    success_message = "Karta utworzona!"
+
+
+class CardUpdateView(CardCreateView, UpdateView, SuccessMessageMixin):
+    success_url = reverse_lazy('card-list')
+    success_message = 'Karta zauktualzowana'
