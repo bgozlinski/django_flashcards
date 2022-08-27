@@ -1,3 +1,13 @@
 from django.shortcuts import render
+from cards.models import Card
 
-# Create your views here.
+
+def card_list(request):
+    cards = Card.objects.all()
+    return render(
+        request=request,
+        template_name='cards/card_list.html',
+        context={
+            'card_list': cards
+        }
+    )
