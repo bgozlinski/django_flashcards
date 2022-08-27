@@ -1,5 +1,5 @@
 import random
-
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -62,9 +62,10 @@ class CardUpdateView(CardCreateView, UpdateView, SuccessMessageMixin):
     success_message = 'Karta zauktualzowana'
 
 
-class BoxView(CardListView):
+class BoxView(CardListView, SuccessMessageMixin):
     template_name = 'cards/box.html'
     form_class = CardCheckForm
+    success_message = "Przenesiono do następnego Boxa"
 
     def get_queryset(self):
         return Card.objects.filter(box=self.kwargs['box_num'])
@@ -82,5 +83,8 @@ class BoxView(CardListView):
         if form.is_valid():
             card = get_object_or_404(Card, id=form.cleaned_data['card_id'])
             card.move(form.cleaned_data['solved'])
-
+            if form.cleaned_data['solved']:
+                messages.add_message(request, messages.SUCCESS, 'OK.')
+            else:
+                messages.add_message(request, messages.ERROR, 'Sprobuj ponownie')
         return redirect(request.META.get('HTTP_REFERER'))
