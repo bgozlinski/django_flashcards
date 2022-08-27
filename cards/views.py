@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from cards.models import Card
+from django.views.generic import (
+    ListView,
+
+)
 
 
 def card_list(request):
@@ -11,3 +15,8 @@ def card_list(request):
             'card_list': cards
         }
     )
+
+
+#  widok klasowy - analogicznie do powyzszego
+class CardListView(ListView):
+    model = Card
