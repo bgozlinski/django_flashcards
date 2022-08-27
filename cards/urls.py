@@ -9,4 +9,5 @@ urlpatterns = [
     path('new/', views.CardCreateView.as_view(), name='card-create'),
     path('edit/<int:pk>/', views.update_view, name='card-update'),
     path('f/edit/<int:pk>/', views.update_view, name='card-update-f'),
+    path('box/<int:box_num>', views.BoxView.as_view(), name='box'),
 ]
