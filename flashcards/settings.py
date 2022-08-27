@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 # New installed apps
 INSTALLED_APPS += [
     'cards.apps.CardsConfig',
+    'import_export',
 ]
 
 if DEBUG:
