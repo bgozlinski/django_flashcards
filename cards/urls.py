@@ -7,6 +7,6 @@ urlpatterns = [
     path('f/', views.card_list, name='card-list'),
     path('', views.CardListView.as_view(), name='card-list'),
     path('new/', views.CardCreateView.as_view(), name='card-create'),
-    path('edit/<int:pk>/', views.update_view, name='card-create'),
-    path('f/edit/<int:pk>/', views.update_view, name='card-create'),
+    path('edit/<int:pk>/', views.update_view, name='card-update'),
+    path('f/edit/<int:pk>/', views.update_view, name='card-update-f'),
 ]
