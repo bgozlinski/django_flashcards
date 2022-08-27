@@ -8,7 +8,7 @@ class CardResource(resources.ModelResource):
 
     class Meta:
         model = Card
-        fields = ('question', 'answer', 'box',)
+        exclude = ('date_created',)
 
 
 class CardAdmin(ImportExportModelAdmin):
