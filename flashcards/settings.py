@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1c$fes(x%5)$#95-3m4lt7b4hfyz4%#qp$u@uia(z!dh_2#33l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
 ]
 
 # New installed apps
@@ -46,7 +47,8 @@ INSTALLED_APPS += [
 if DEBUG:
     INSTALLED_APPS += [
         'django_extensions',
-    ]
+        "debug_toolbar",
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'flashcards.urls'
